@@ -26,9 +26,9 @@ def main():
 			action="store", type="string", dest="mbnv",
 			help="Default MBN version is 3.")
 
-        parser.add_option("-c", "--com compression option",
-                        action="store", type="string", dest="compress_method",
-                        help="Compression method")
+	parser.add_option("-c", "--com compression option",
+			action="store", type="string", dest="compress_method",
+			help="Compression method")
 
 
 	(options, args) = parser.parse_args()
@@ -39,13 +39,13 @@ def main():
 		parser.error('Output filename not given')
 	if options.mbnv != '6':
 		mbnv = 3
-        else:
+	else:
 		mbnv = 6
 
 	if options.compress_method:
-          compress_method = options.compress_method
-        else:
-          compress_method = ""
+		compress_method = options.compress_method
+	else:
+		compress_method = ""
 
 	gen_dict = {}
 
@@ -76,7 +76,7 @@ def main():
 			secure_type = image_header_secflag,
 			mbn_version = mbnv)
 	if rv:
-		raise RuntimeError, "Failed to run pboot_gen_elf"
+		raise RuntimeError("Failed to run pboot_gen_elf")
 
 	# Create hash table header
 	rv = mbn_tools.image_header([],
@@ -87,7 +87,7 @@ def main():
 			elf_file_name = target_phdr_elf,
 			mbn_version = mbnv)
 	if rv:
-		raise RuntimeError, "Failed to create image header for hash segment"
+		raise RuntimeError("Failed to create image header for hash segment")
 
 	files_to_cat_in_order = [target_hash_hd, target_hash]
 	mbn_tools.concat_files (target_nonsec, files_to_cat_in_order)
